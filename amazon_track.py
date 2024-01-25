@@ -32,7 +32,12 @@ def get_amazon_price(url):
 
 
 # Sample product URL
-urls = []
+################################
+#   Add URL below inside ""
+################################
+urls = [
+        "",
+        ""]
 
 # Get the price using the function
 for url in urls:
