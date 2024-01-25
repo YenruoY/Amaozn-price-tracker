@@ -22,7 +22,7 @@ Work in progress.
 
 For now, add product link inside the URL veriable in the script. 
 
-**Note :** In the product link, anything after product ID is not required. For example : In "https://amazon.in/<product_name>/dp/<product_id>/.." everyting after "../<product_id>" should be removed including the trailing '/' character.
+**Note :** In the product link, anything after product ID is not required. For example : In `https://amazon.in/<product_name>/dp/<product_id>/..` everyting after `../<product_id>` should be removed including the trailing **'/'** character.
 
 # Dependencies 
 
