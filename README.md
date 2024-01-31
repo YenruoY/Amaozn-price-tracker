@@ -34,3 +34,11 @@ For now, add product link inside the URL veriable in the script.
 1. `url.list` file and a function to read the file
 1. `config` file and a function to read the file
 1. Add option to add cron job 
+
+# Updates
+
+## 31/01/2024
+
+- Added helper functions (moved functions from `amazon_tracker.py` to `helper_functions.py`.
+- Added config file that is able to cache product data.
+- Now the config file can remove trackers from the product link.
