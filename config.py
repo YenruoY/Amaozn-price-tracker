@@ -6,8 +6,8 @@ import re
 import json
 import requests
 from bs4 import BeautifulSoup
-from functions import get_name
-from functions import get_price
+from helper_fucntions import get_name
+from helper_fucntions import get_price
 
 # path = ""
 

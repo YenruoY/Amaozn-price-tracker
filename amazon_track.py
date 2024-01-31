@@ -17,11 +17,12 @@ for url in urls:
   response = requests.get(url, headers= {'User-agent' : 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'})
 
   price = get_price(response)
-  name = get_price(response)
+  name = get_name(response)
 
   # Print product name and price 
   if price:
-    print(title)
+    print("\n")
+    print(name)
     print(f"The price of the product is Rs. {price}")
     print(url)
   else:
