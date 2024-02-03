@@ -1,27 +1,38 @@
 import re
+import json
+import glob
 import requests
+import datetime
 from helper_fucntions import get_name
 from helper_fucntions import get_price
-from bs4 import BeautifulSoup
 
-# Sample product URL
-################################
-#   Add URL below inside ""
-################################
-urls = [
-        "",
-        ""]
+
+products = glob.glob(".cache/*.json")
+dt_ob = datetime.datetime.now()
+
+
+def update_price(product, price):
+  with open(product, 'r') as f:
+    existing_data = json.load(f)
+
+  current_time = dt_ob.strftime("%Y-%m-%d %H:%M")
+
+  existing_data["current_price"].update({current_time : price})
+
+  with open(product, 'w') as f:
+    json.dump(existing_data, f, indent=4)
+
 
 # Get the price using the function
-for url_raw in urls:
+for product in products:
+
+  product_id = re.findall(r"/([A-Z0-9]+)\.json", product)[0]
+
+  url = "https://www.amazon.in/dp/" + product_id
 
   # url pre-processing
-  if url_raw[-1] != '/':
-    url_raw = url_raw + '/'
-
-  # strip the required parts from the url
-  product_id = re.findall(r"/dp/(.+?)/", url_raw)[0]
-  url = "https://www.amazon.in/dp/" + product_id
+  if url[-1] != '/':
+    url = url + '/'
   
   response = requests.get(url, headers= {'User-agent' : 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'})
 
@@ -32,8 +43,9 @@ for url_raw in urls:
   if price:
     print("\n")
     print(name)
-    print(f"The price of the product is Rs. {price}")
+    print(f"Current price of the product Rs. {price}")
     print(url)
+
+    update_price(product, price)
   else:
     print("Price not found")
-    

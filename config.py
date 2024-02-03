@@ -2,14 +2,16 @@
 Configuration file to assist `amazon_track.py` script
 """
 
+import os
 import re
 import json
 import requests
+import datetime
 from bs4 import BeautifulSoup
 from helper_fucntions import get_name
 from helper_fucntions import get_price
 
-# path = ""
+time_object = datetime.datetime.now() 
 
 def add_link():
   
@@ -23,6 +25,10 @@ def add_link():
   product_id = re.findall(r"/dp/(.+?)/", url_raw)[0]
 
   print("Product id : ", product_id)
+
+  if os.path.exists('.cache/' + product_id + '.json'):
+    print("Product already added!")
+    return
 
   url = "https://www.amazon.in/dp/" + product_id
   request = requests.get(url, headers= {'User-agent' : 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'})
@@ -45,17 +51,22 @@ def add_link():
   except ValueError:
     print("Not a valid price")
   
+  current_time = time_object.strftime("%Y-%m-%d %H:%M")
+
   # add the link to a cache file 
   item = {
     "product_name" : name,
     "product_it" : product_id,
     "target_price" : target_price,
+    "current_price" : {
+      current_time : price
+    }
   }
 
   with open('./.cache/'+ product_id + '.json', 'w', encoding='utf-8') as f:
-    json.dump(item, f)
+    json.dump(item, f, indent=4)
 
-  print(json.dumps(item))
+  print("Product added for tracking...")
 
 
 def main():
